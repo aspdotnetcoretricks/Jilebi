@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@ViewBag.test
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                EmpId
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Addressss
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+   
+
+                @if (@ViewBag.empList != null)
+                {
+                    foreach (var item in ViewBag.empList)
+                    {
+                        <tr>
+                            <td>@item.EmpId</td>
+                            <td>@item.Name</td>
+                            <td>@item.Address</td>
+                        </tr>
+                    }
+                }
+
+                        
+    </tbody>
+</table>
