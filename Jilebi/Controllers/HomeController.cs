@@ -18,7 +18,8 @@ namespace Jilebi.Controllers
         //but if you give interface as parameter in HomeController constructor it doesnot work
         //to solve this problem use "Unity.MVC5"library, then the constructor works fine as per you by giving interface as parameter
         // in constructor
-        //why we need to use directly concrete class should not use in business layer 
+        //why we need to use directly concrete class should not use in business layer.
+        //this controller is DI
         public HomeController(IEmployee emp)
         {
             _emp = emp;
