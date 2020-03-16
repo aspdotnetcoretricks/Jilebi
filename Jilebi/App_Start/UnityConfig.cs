@@ -20,7 +20,7 @@ namespace Jilebi
             // e.g. container.RegisterType<ITestService, TestService>();
             
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-            container.RegisterType<IEmployee, Employee>();
+            container.RegisterType<IEmployee, EmployeeBusiness>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
 
          //   container.RegisterType<Employee>(new InjectionConstructor(0));

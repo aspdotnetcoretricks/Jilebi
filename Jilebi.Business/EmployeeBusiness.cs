@@ -10,7 +10,7 @@ using Jilebi.Repository.Repositories;
 
 namespace Jilebi.Business
 {
-    public class Employee : IEmployee
+    public class EmployeeBusiness : IEmployee
     {
         //public Employee(int x)
         //{
@@ -18,7 +18,7 @@ namespace Jilebi.Business
         //}
         private readonly IUnitOfWork unitOfWork;
         private readonly EmployeeRepository empRepository;
-        public Employee(IUnitOfWork _unitOfWork)
+        public EmployeeBusiness(IUnitOfWork _unitOfWork)
         {
             unitOfWork = _unitOfWork;
             empRepository = new EmployeeRepository(unitOfWork);
@@ -61,7 +61,32 @@ namespace Jilebi.Business
             return list;
         }
 
-
+        public string AddEditEmp(EmployeeDomainModel empModel)
+        {
+            string result = "";
+            if (empModel.EmpId > 0)
+            {
+                Employee emp = empRepository.SingleOrDefault(x => x.EmpId == empModel.EmpId);
+                if (emp != null)
+                {
+                    emp.Name = empModel.Name;
+                    emp.Address = empModel.Address;
+                    emp.DeptId = empModel.DeptId;
+                    empRepository.Update(emp);
+                    result = "updated";
+                }
+            }
+            else
+            {
+                Employee emp = new Employee();
+                emp.Name = empModel.Name;
+                emp.Address = empModel.Address;
+                emp.DeptId= empModel.DeptId;
+                empRepository.Insert(emp);
+                result = "Inserted";
+            }
+            return result;
+        }
     }
 }
 

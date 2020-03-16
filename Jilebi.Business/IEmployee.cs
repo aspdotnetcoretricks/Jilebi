@@ -11,5 +11,6 @@ namespace Jilebi.Business
     {
         string GetEmployeeName(int EmpId);
         List<EmployeeDomainModel> getAllEmployeesList();
+        string AddEditEmp(EmployeeDomainModel emp);
     }
 }
