@@ -26,27 +26,29 @@ namespace Jilebi.Controllers
         }
         public ActionResult Index()
         {
-           string result= AddEditEmployee();
-            string empResult = _emp.GetEmployeeName(1);
+            return View();
+            
+        }
+        
+        public ActionResult GetEmployeeData()
+        {
             List<EmployeeDomainModel> EmpDomainList = _emp.getAllEmployeesList();
             List<EmployeeViewModel> empViewList = new List<EmployeeViewModel>();
             AutoMapper.Mapper.Map(EmpDomainList, empViewList);
-            ViewBag.test = empResult;
-            ViewBag.empList = empViewList;
-            return View();
+            return Json(new { data = empViewList }, JsonRequestBehavior.AllowGet);
         }
 
         public string AddEditEmployee()
         {
             EmployeeViewModel empView = new EmployeeViewModel();
             string result = "";
-            empView.EmpId=1;
+            empView.EmpId = 1;
             empView.Name = "Sathwiq";
             empView.Address = "Hyderabad";
-            empView.DeptId= 2;
+            empView.DeptId = 2;
             EmployeeDomainModel empDoModel = new EmployeeDomainModel();
-            AutoMapper.Mapper.Map(empView,empDoModel);
-            result=_emp.AddEditEmp(empDoModel);
+            AutoMapper.Mapper.Map(empView, empDoModel);
+            result = _emp.AddEditEmp(empDoModel);
 
             return result;
         }

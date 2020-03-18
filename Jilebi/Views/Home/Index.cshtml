@@ -1,55 +1,44 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<a class="btn btn-default" style="margin-bottom:10px"><i class="fa fa-plus"></i> Add New Employee</a>
+<table class="table table-striped table-bordered" id="myDataTable">
+    <thead>
+        <tr>
+            <th>EmpId</th>
+            <th>Name</th>
+            <th>Addressss</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
 
-@*<h2>Index</h2>
-    @ViewBag.test*@
-
-<div class="col-md-6">
-    <table class="display" id="myDataTable">
-        <thead>
-            <tr>
-                <th>
-                    EmpId
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Addressss
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+@*<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
-            @if (@ViewBag.empList != null)
-            {
-                foreach (var item in ViewBag.empList)
-                {
-                    <tr>
-                        <td>@item.EmpId</td>
-                        <td>@item.Name</td>
-                        <td>@item.Address</td>
-                    </tr>
-                }
-            }
-
-
-        </tbody>
-    </table>
-</div>
-<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript">
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script>
         $(document).ready(function () {
-            $('#myDataTable').dataTable();
+            $('#myDataTable').dataTable({
+                "ajax": {
+                    "url": "/Home/GetEmployeeData",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "EmpId" },
+                    { "data": "Name" },
+                    { "data": "Address" }
 
+                ]
+            });
         });
     </script>
 
