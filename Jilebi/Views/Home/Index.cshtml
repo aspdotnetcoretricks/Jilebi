@@ -7,49 +7,50 @@
 
 
 @*<h2>Index</h2>
-@ViewBag.test*@
+    @ViewBag.test*@
+
+<div class="col-md-6">
+    <table class="display" id="myDataTable">
+        <thead>
+            <tr>
+                <th>
+                    EmpId
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Addressss
+                </th>
+            </tr>
+        </thead>
+        <tbody>
 
 
-
-    <div class="col-md-6">
-        <table class="display" id="myDataTable">
-            <thead>
-                <tr>
-                    <th>
-                        EmpId
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Addressss
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                @if (@ViewBag.empList != null)
+            @if (@ViewBag.empList != null)
             {
                 foreach (var item in ViewBag.empList)
                 {
-                        <tr>
-                            <td>@item.EmpId</td>
-                            <td>@item.Name</td>
-                            <td>@item.Address</td>
-                        </tr>
-                    }
+                    <tr>
+                        <td>@item.EmpId</td>
+                        <td>@item.Name</td>
+                        <td>@item.Address</td>
+                    </tr>
                 }
+            }
 
 
-            </tbody>
-        </table>
-    </div>
-<script type="text/javascript">
+        </tbody>
+    </table>
+</div>
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
         $(document).ready(function () {
             $('#myDataTable').dataTable();
-          
+
         });
-</script>
+    </script>
 
-
+}
