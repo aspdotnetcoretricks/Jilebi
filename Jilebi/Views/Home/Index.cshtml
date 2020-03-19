@@ -3,13 +3,16 @@
     ViewBag.Title = "Index";
 }
 
-<a class="btn btn-default" style="margin-bottom:10px"><i class="fa fa-plus"></i> Add New Employee</a>
+<a class="btn btn-success" style="margin-bottom:10px" onclick="Popupform('@Url.Action("AddEditEmployee","Home")')">
+    <i class="fa fa-plus"></i> Add New
+</a>
+
 <table class="table table-striped table-bordered" id="myDataTable">
     <thead>
         <tr>
-            <th>EmpId</th>
-            <th>Name</th>
-            <th>Addressss</th>
+            <th>Id</th>
+            <th>Employee Name</th>
+            <th>Addres</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -17,16 +20,17 @@
 
 
 @*<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />*@
-<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/DataTable/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 @section scripts{
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/DataTable/dataTables.bootstrap.min.js"></script>
     <script>
+        var Popup, DataTable;
         $(document).ready(function () {
-            $('#myDataTable').dataTable({
+            DataTable = $('#myDataTable').dataTable({
                 "ajax": {
                     "url": "/Home/GetEmployeeData",
                     "type": "GET",
@@ -36,10 +40,49 @@
                     { "data": "EmpId" },
                     { "data": "Name" },
                     { "data": "Address" }
-
-                ]
+                ],
+                "language":
+                    {
+                        "emptyTable": "No Records Found Please click on <b>Addd New Employee</b>"
+                    }
             });
         });
+
+        function Popupform(url) {
+            var formDiv = $('<div/>');
+            $.get(url).done(function (response) {
+                formDiv.html(response);
+
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Fille Employee Details',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+                });
+
+            });
+        }
+
+        function Submitform(form) {
+            $.ajax({
+                type: "POST",
+                url: form.action,
+                data: $(form).serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        Popup.dialog('close');
+                        DataTable.ajax.reload();
+
+                        //$('#myDataTable').DataTable().ajax.reload();
+                    }
+                }
+            });
+            return false;
+        }
     </script>
 
 }

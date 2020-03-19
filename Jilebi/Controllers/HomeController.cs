@@ -27,9 +27,9 @@ namespace Jilebi.Controllers
         public ActionResult Index()
         {
             return View();
-            
+
         }
-        
+
         public ActionResult GetEmployeeData()
         {
             List<EmployeeDomainModel> EmpDomainList = _emp.getAllEmployeesList();
@@ -38,19 +38,27 @@ namespace Jilebi.Controllers
             return Json(new { data = empViewList }, JsonRequestBehavior.AllowGet);
         }
 
-        public string AddEditEmployee()
+        [HttpGet]
+
+        public ActionResult AddEditEmployee()
         {
-            EmployeeViewModel empView = new EmployeeViewModel();
+            return View(new EmployeeViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult AddEditEmployee(EmployeeViewModel empView)
+        {
             string result = "";
-            empView.EmpId = 1;
-            empView.Name = "Sathwiq";
-            empView.Address = "Hyderabad";
-            empView.DeptId = 2;
+            empView.EmpId = empView.EmpId;
+            empView.Name = empView.Name;
+            empView.Address = empView.Address;
+            empView.DeptId = empView.DeptId;
             EmployeeDomainModel empDoModel = new EmployeeDomainModel();
             AutoMapper.Mapper.Map(empView, empDoModel);
             result = _emp.AddEditEmp(empDoModel);
 
-            return result;
+            return Json(new { success=true,message="Saved Successfully"}, JsonRequestBehavior.AllowGet);
+           
         }
 
     }

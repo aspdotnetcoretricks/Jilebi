@@ -1,0 +1,30 @@
+﻿@model Jilebi.Models.EmployeeViewModel
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddEditEmployee", "Home", FormMethod.Post, new { onsubmit = "return Submitform(this)" }))
+{
+    @Html.HiddenFor(model => model.EmpId)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DeptId, new { @class = "control-label" })
+        <div class="input-group">
+            <span class="input-group-addon">$</span>
+            @Html.EditorFor(model => model.DeptId, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn btn-warning" />
+    </div>
+
+}
